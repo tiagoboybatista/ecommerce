@@ -21,15 +21,15 @@
                     <div class="row">
                         @foreach (var item in Model.Produtos)
                         {
-                        <div class="card divProdutos divProdutos-tamanho">
-                            <img class="card-img-top photoAnuncio" src="@item.Imagem" alt="@item.Nome"/>
-                            <div class="card-body">
-                                <h5 class="card-title">@item.Nome</h5>
-                                <p class="card-text">@item.Descricao</p>
-                                <h6 class="card-title"><b>R$ @item.Preco</b></h6>
-                                <a href="#" class="btn btn-primary center-block">Adicionar</a>
+                            <div class="card divProdutos divProdutos-tamanho">
+                                <img class="card-img-top photoAnuncio" src="@item.Imagem" alt="@item.Nome"/>
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.Nome</h5>
+                                    <p class="card-text">@item.Descricao</p>
+                                    <h6 class="card-title"><b>R$ @item.Preco</b></h6>
+                                    <a href="#" class="btn btn-primary center-block">Adicionar</a>
+                                </div>
                             </div>
-                        </div>
                         }
 
                     </div>

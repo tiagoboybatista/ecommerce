@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeuEcommerce.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,36 +26,50 @@ namespace MeuEcommerce.Controllers
 
     public class HomeController : BaseController
     {
+        private Carrinho GetCarrinho()
+        {
+            if (Session["carrinho"] == null)
+            {
+                Session["carrinho"] = new Carrinho();
+            }
+            return (Carrinho)Session["carrinho"];
+        }
+
+        private Produto[] GetProdutos()
+        {
+
+        }
+
         public ActionResult Index(int? id)
         {
+            ViewBag.Carrinho = GetCarrinho();
+
             var model = new Models.HomeIndexViewModel();
 
             model.Produtos = new Models.Produto[]
-            {   /*Celular*/
-                new Models.Produto("Iphone", 1, 1,"iphone"),
-                /*Eletrodosmésticos*/
+            {   
+                new Models.Produto("Iphone", 1, 1,"iphone"),               
                 new Models.Produto("Geladeira", 1, 2,"geladeira"),
                 new Models.Produto("Batedeira", 1, 2,"batedeira"),
                 new Models.Produto("Ar Condicionado", 1, 2,"ar-condicionado"),
-                new Models.Produto("Lava & Seca", 1, 2,"lava_seca"),
-                /*Eletrônico*/
-                new Models.Produto("Home Theater", 1, 3,"homeTheater"),
-                /*TV*/
+                new Models.Produto("Lava & Seca", 1, 2,"lava_seca"),               
+                new Models.Produto("Home Theater", 1, 3,"homeTheater"),                
                 new Models.Produto("TV Led", 2, 5,"tv"),
-
                 new Models.Produto("Playstation 4", 3, 4,"ps4"),
                 new Models.Produto("X-BOX 4", 3, 4,"xbox"),
-
                 new Models.Produto("MacBook Air", 4, 3,"macbook"),
             };
-
-            /*Fazendo um filtro para filtrar a categoria do produto*/
+            /*Fazendo um filtro categoria do produto*/
             if (id != null)
             {
                 model.Produtos = model.Produtos.Where(p => p.Id_Categoria == id).ToArray();
             }
-
             return View(model);           
+        }
+
+        public ActionResult AddItem(int id)
+        {
+            var produto = 
         }
 
         public ActionResult About()

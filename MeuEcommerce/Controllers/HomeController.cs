@@ -53,16 +53,16 @@ namespace MeuEcommerce.Controllers
             {
                 _produto = new Models.Produto[]
                 {
-                    new Models.Produto("Iphone", 1, 1,"iphone"),
-                    new Models.Produto("Geladeira", 1, 2,"geladeira"),
-                    new Models.Produto("Batedeira", 1, 2,"batedeira"),
-                    new Models.Produto("Ar Condicionado", 1, 2,"ar-condicionado"),
-                    new Models.Produto("Lava & Seca", 1, 2,"lava_seca"),
-                    new Models.Produto("Home Theater", 1, 3,"homeTheater"),
-                    new Models.Produto("TV Led", 2, 5,"tv"),
-                    new Models.Produto("Playstation 4", 3, 4,"ps4"),
-                    new Models.Produto("X-BOX 4", 3, 4,"xbox"),
-                    new Models.Produto("MacBook Air", 4, 3,"macbook"),
+                    new Models.Produto("Iphone", 01, 1,"iphone"),
+                    new Models.Produto("Geladeira", 02, 2,"geladeira"),
+                    new Models.Produto("Batedeira", 03, 2,"batedeira"),
+                    new Models.Produto("Ar Condicionado", 04, 2,"ar-condicionado"),
+                    new Models.Produto("Lava & Seca", 05, 2,"lava_seca"),
+                    new Models.Produto("Home Theater", 06, 3,"homeTheater"),
+                    new Models.Produto("TV Led", 07, 5,"tv"),
+                    new Models.Produto("Playstation 4", 08, 4,"ps4"),
+                    new Models.Produto("X-BOX 4", 09, 4,"xbox"),
+                    new Models.Produto("MacBook Air", 10, 3,"macbook"),
                 };
             }
             return _produto;

@@ -155,7 +155,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Carrinho.cs" />
+    <Compile Include="Models\CarrinhoItem.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\CheckoutIndexViewModel.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

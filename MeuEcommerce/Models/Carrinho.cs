@@ -23,7 +23,7 @@ namespace MeuEcommerce.Models
             }
             else
             {
-                var carrinhoItem = new CarrinhoItem(produto.Id, produto.Nome, produto.Preco);
+                var carrinhoItem = new CarrinhoItem(produto.Id, produto.Nome, produto.Descricao, produto.Preco);
 
                 Itens.Add(produto.Id, carrinhoItem);
             }
@@ -39,24 +39,16 @@ namespace MeuEcommerce.Models
             }
             return total;
         }        
-    }
 
-    public class CarrinhoItem
-    {
-        public int Id_Produto { get; set; }        
-        public string Nome { get; set; }
-        public decimal PrecoUnitario { get; set; }
-        public int Quantidade { get; set; }
-
-        public CarrinhoItem(int id_produto, string nome, decimal precoUnitario)
+        public decimal GetPrecoTotal()
         {
-            Id_Produto = id_produto;
-            Nome = nome;
-            Quantidade = 1;
-            PrecoUnitario = precoUnitario;
+            decimal resultado = 0;
+            foreach (var item in Itens.Values)
+            {
+                resultado += item.PrecoTotal;
+            }
+            return resultado;
         }
-
-        public decimal PrecoTotal
-            => PrecoUnitario * Quantidade;
     }
+
 }

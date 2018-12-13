@@ -9,24 +9,24 @@ namespace MeuEcommerce.Controllers
 {
     public class BaseController : Controller
     {
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        static Categoria[] _categorias;
+        private Categoria[] GetCategorias()
         {
-            ViewBag.Categorias = new Models.Categoria[]
+            if (_categorias == null)
             {
-                new Models.Categoria(1,"Celular"),
-                new Models.Categoria(2,"Eletrodosmésticos"),
-                new Models.Categoria(3,"Eletrônico"),
-                new Models.Categoria(4,"Games"),
-                new Models.Categoria(5,"TV"),
-            };
-
-            base.OnActionExecuting(filterContext);
+                _categorias = new Models.Categoria[]
+                {
+                    new Models.Categoria(1,"Celular"),
+                    new Models.Categoria(2,"Eletrodosmésticos"),
+                    new Models.Categoria(3,"Eletrônico"),
+                    new Models.Categoria(4,"Games"),
+                    new Models.Categoria(5,"TV"),
+                };
+            }
+            return _categorias;
         }
-    }
 
-    public class HomeController : BaseController
-    {
-        private Carrinho GetCarrinho()
+        protected Carrinho GetCarrinhoDaSessao()
         {
             if (Session["carrinho"] == null)
             {
@@ -35,41 +35,70 @@ namespace MeuEcommerce.Controllers
             return (Carrinho)Session["carrinho"];
         }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            ViewBag.Categorias = GetCategorias();
+            ViewBag.Carrinho = GetCarrinhoDaSessao();
+
+            base.OnActionExecuting(filterContext);
+        }        
+    }
+
+    public class HomeController : BaseController
+    {
+        static Produto[] _produto;
         private Produto[] GetProdutos()
         {
-
+            if (_produto == null)
+            {
+                _produto = new Models.Produto[]
+                {
+                    new Models.Produto("Iphone", 1, 1,"iphone"),
+                    new Models.Produto("Geladeira", 1, 2,"geladeira"),
+                    new Models.Produto("Batedeira", 1, 2,"batedeira"),
+                    new Models.Produto("Ar Condicionado", 1, 2,"ar-condicionado"),
+                    new Models.Produto("Lava & Seca", 1, 2,"lava_seca"),
+                    new Models.Produto("Home Theater", 1, 3,"homeTheater"),
+                    new Models.Produto("TV Led", 2, 5,"tv"),
+                    new Models.Produto("Playstation 4", 3, 4,"ps4"),
+                    new Models.Produto("X-BOX 4", 3, 4,"xbox"),
+                    new Models.Produto("MacBook Air", 4, 3,"macbook"),
+                };
+            }
+            return _produto;
         }
 
         public ActionResult Index(int? id)
         {
-            ViewBag.Carrinho = GetCarrinho();
-
             var model = new Models.HomeIndexViewModel();
 
-            model.Produtos = new Models.Produto[]
-            {   
-                new Models.Produto("Iphone", 1, 1,"iphone"),               
-                new Models.Produto("Geladeira", 1, 2,"geladeira"),
-                new Models.Produto("Batedeira", 1, 2,"batedeira"),
-                new Models.Produto("Ar Condicionado", 1, 2,"ar-condicionado"),
-                new Models.Produto("Lava & Seca", 1, 2,"lava_seca"),               
-                new Models.Produto("Home Theater", 1, 3,"homeTheater"),                
-                new Models.Produto("TV Led", 2, 5,"tv"),
-                new Models.Produto("Playstation 4", 3, 4,"ps4"),
-                new Models.Produto("X-BOX 4", 3, 4,"xbox"),
-                new Models.Produto("MacBook Air", 4, 3,"macbook"),
-            };
+            model.Produtos = GetProdutos();
             /*Fazendo um filtro categoria do produto*/
             if (id != null)
             {
                 model.Produtos = model.Produtos.Where(p => p.Id_Categoria == id).ToArray();
-            }
+            }            
             return View(model);           
         }
 
         public ActionResult AddItem(int id)
         {
-            var produto = 
+            var listaProdutos = GetProdutos();
+
+            Produto produto = null;
+
+            foreach (var item in listaProdutos)
+            {
+                if (item.Id == id)
+                {
+                    produto = item;
+                }
+            }
+            var carrinho = GetCarrinhoDaSessao();
+
+            carrinho.AddProduto(produto);
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult About()

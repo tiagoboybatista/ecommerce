@@ -7,14 +7,14 @@ namespace MeuEcommerce.Models
 {
     public class Carrinho
     {
-        private Dictionary<int, CarrinhoItem> Itens;
+        public Dictionary<int, CarrinhoItem> Itens;
 
         public Carrinho()
         {
             Itens = new Dictionary<int, CarrinhoItem>();
         }
 
-        public void Add(Produto produto)
+        public void AddProduto(Produto produto)
         {
             /*verificar se já existe um item igual no meu carrinho*/
             if (Itens.ContainsKey(produto.Id))
@@ -28,6 +28,17 @@ namespace MeuEcommerce.Models
                 Itens.Add(produto.Id, carrinhoItem);
             }
         }
+
+
+        public int TotalItensCarrinho()
+        {
+            int total = 0;
+            foreach (var item in Itens)
+            {
+                total = total + item.Value.Quantidade; /*para ler o dicionário (o item > chave > valor da coisa)*/
+            }
+            return total;
+        }        
     }
 
     public class CarrinhoItem

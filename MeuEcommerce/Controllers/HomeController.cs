@@ -1,4 +1,5 @@
-﻿using MeuEcommerce.Models;
+﻿using MeuEcommerce.DAL;
+using MeuEcommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,7 @@ namespace MeuEcommerce.Controllers
     public class BaseController : Controller
     {
         static Categoria[] _categorias;
-        private Categoria[] GetCategorias()
-        {
-            if (_categorias == null)
-            {
-                _categorias = new Models.Categoria[]
-                {
-                    new Models.Categoria(1,"Celular"),
-                    new Models.Categoria(2,"Eletrodosmésticos"),
-                    new Models.Categoria(3,"Eletrônico"),
-                    new Models.Categoria(4,"Games"),
-                    new Models.Categoria(5,"TV"),
-                };
-            }
-            return _categorias;
-        }
+        protected Database _db = new Database();
 
         protected Carrinho GetCarrinhoDaSessao()
         {
@@ -37,7 +24,7 @@ namespace MeuEcommerce.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.Categorias = GetCategorias();
+            ViewBag.Categorias = _db.Categorias.ToArray();
             ViewBag.Carrinho = GetCarrinhoDaSessao();
 
             base.OnActionExecuting(filterContext);
@@ -47,43 +34,23 @@ namespace MeuEcommerce.Controllers
     public class HomeController : BaseController
     {
         static Produto[] _produto;
-        private Produto[] GetProdutos()
-        {
-            if (_produto == null)
-            {
-                _produto = new Models.Produto[]
-                {
-                    new Models.Produto("Iphone", 01, 1,"iphone"),
-                    new Models.Produto("Geladeira", 02, 2,"geladeira"),
-                    new Models.Produto("Batedeira", 03, 2,"batedeira"),
-                    new Models.Produto("Ar Condicionado", 04, 2,"ar-condicionado"),
-                    new Models.Produto("Lava & Seca", 05, 2,"lava_seca"),
-                    new Models.Produto("Home Theater", 06, 3,"homeTheater"),
-                    new Models.Produto("TV Led", 07, 5,"tv"),
-                    new Models.Produto("Playstation 4", 08, 4,"ps4"),
-                    new Models.Produto("X-BOX 4", 09, 4,"xbox"),
-                    new Models.Produto("MacBook Air", 10, 3,"macbook"),
-                };
-            }
-            return _produto;
-        }
 
         public ActionResult Index(int? id)
         {
             var model = new Models.HomeIndexViewModel();
 
-            model.Produtos = GetProdutos();
+            model.Produtos = _db.Produtos.ToArray();
             /*Fazendo um filtro categoria do produto*/
             if (id != null)
             {
-                model.Produtos = model.Produtos.Where(p => p.Id_Categoria == id).ToArray();
+                model.Produtos = model.Produtos.Where(p => p.CategoriaId == id).ToArray();
             }            
             return View(model);           
         }
 
         public ActionResult AddItem(int id)
         {
-            var listaProdutos = GetProdutos();
+            var listaProdutos = _db.Produtos.ToArray();
 
             Produto produto = null;
 

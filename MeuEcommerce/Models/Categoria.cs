@@ -10,11 +10,6 @@ namespace MeuEcommerce.Models
         public int Id { get; set; }
         public string Nome { get; set; }
 
-        /*Construtor*/
-        public Categoria(int id, string nome)
-        {
-            Id = id;
-            Nome = nome;
-        }
+        public List<Produto> Produtos { get; set; }
     }
 }

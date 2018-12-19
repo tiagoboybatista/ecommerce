@@ -30,12 +30,13 @@
                 </td>
             </tr>
         }
-            <tr></tr>
-            <tr>
-                <td colspan="2">Total: </td>
-                <td colspan="4">R$ @Model.Carrinho.GetPrecoTotal().ToString("N2")</td>
-            </tr>
-
-    </tbody>
+        <tr></tr>
+        <tr>
+            <td colspan="2">Total: </td>
+            <td colspan="4">R$ @Model.Carrinho.GetPrecoTotal().ToString("N2")</td>
+        </tr>
+    </tbody>    
 </table>
+<a href="" class="btn">Limpar</a>
+<a href="/checkout/CompraRealizada" class="btn btn-primary">Continuar</a>
 

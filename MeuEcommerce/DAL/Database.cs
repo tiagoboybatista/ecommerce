@@ -10,7 +10,10 @@ namespace MeuEcommerce.DAL
     public class Database : DbContext
     {
         public IDbSet<Produto> Produtos { get; set; }
-        public IDbSet<Categoria> Categorias { get; set; }        
+        public IDbSet<Categoria> Categorias { get; set; }
+
+        public IDbSet<Compra> Compra { get; set; }
+        public IDbSet<Compras_Item> Compras_Item { get; set; }
 
         static private string GetConnectionString()
         {

@@ -1,0 +1,34 @@
+﻿@model MeuEcommerce.Models.Compra
+@{
+    ViewBag.Title = "CompraRealizada";
+}
+
+<h2>CompraRealizada</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Produto</td>
+            <td>Quantidade</td>
+            <td>Preço</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Itens)
+        {
+            <tr>
+                <td>
+                    @item.Produto.Nome
+                </td>
+                <td>
+                    @item.Qtd
+                </td>
+                <td>
+                    @item.PrecoUnitario
+                </td>
+            </tr>
+        }
+    </tbody>
+    Valor total: @Model.PrecoTotal
+    Status: @Model.Status.ToString()
+</table>

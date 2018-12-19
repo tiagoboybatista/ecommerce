@@ -11,7 +11,7 @@ namespace MeuEcommerce.Controllers
     public class BaseController : Controller
     {
         static Categoria[] _categorias;
-        protected Database _db = new Database();
+        protected Database _dal = new Database();
 
         protected Carrinho GetCarrinhoDaSessao()
         {
@@ -24,7 +24,7 @@ namespace MeuEcommerce.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.Categorias = _db.Categorias.ToArray();
+            ViewBag.Categorias = _dal.Categorias.ToArray();
             ViewBag.Carrinho = GetCarrinhoDaSessao();
 
             base.OnActionExecuting(filterContext);
@@ -39,7 +39,7 @@ namespace MeuEcommerce.Controllers
         {
             var model = new Models.HomeIndexViewModel();
 
-            model.Produtos = _db.Produtos.ToArray();
+            model.Produtos = _dal.Produtos.ToArray();
             /*Fazendo um filtro categoria do produto*/
             if (id != null)
             {
@@ -50,7 +50,7 @@ namespace MeuEcommerce.Controllers
 
         public ActionResult AddItem(int id)
         {
-            var listaProdutos = _db.Produtos.ToArray();
+            var listaProdutos = _dal.Produtos.ToArray();
 
             Produto produto = null;
 
